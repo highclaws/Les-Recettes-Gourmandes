@@ -19,3 +19,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', function () {
     return view('blog/home');
 });
+Route::resource('/posts', 'Postcontroller');
