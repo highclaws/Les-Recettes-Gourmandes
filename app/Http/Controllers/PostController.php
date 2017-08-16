@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Illuminate\Http\Request;
+use App\Post;
+use Auth;
 
 class PostController extends Controller
 {
@@ -38,7 +39,19 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
-    }
+        $post = New Post;
+
+        $postTitle =  $request->title;
+        $postBody = $request->body;
+        $postUserId = Auth::id();
+
+        $post->user_id = $postUserId;
+        $post->title = $postTitle;
+        $post->body = $postBody;
+
+        $post->save();
+        return redirect()->route('posts.index');
+  }
 
     /**
      * Display the specified resource.

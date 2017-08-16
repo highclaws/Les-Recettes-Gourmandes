@@ -3,7 +3,8 @@
 @section('content')
 <h1>Add New Post</h1>
 <div class="col-sm8 col-sm-offset-2">
-<form action="">
+<form action="{{ route('posts.store') }}" method="post">
+    {{ csrf_field() }}
     <div class="form-group">
         <label for="title">Title:</label>
         <input type="text" name="title" value="" class="form-control">

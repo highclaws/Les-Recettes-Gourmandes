@@ -4,7 +4,7 @@
 
 @section('content')
 <h1>Admin Panel</h1>
-<a href="{{ route('posts.create') }}" class="btn btn-primary pull-right"></a>
+<a href="{{ route('posts.create') }}" class="btn btn-primary pull-right">add new blog post</a>
 
 
 <table class="table">
