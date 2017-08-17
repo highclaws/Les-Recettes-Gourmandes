@@ -13,6 +13,10 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+     public function publicHomePage() {
+         $posts = Post::paginate(9);
+         return view('blog/home', ['posts'=>$posts]);
+     }
     public function index()
     {
         //
@@ -62,9 +66,16 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
         //
+        $post = Post::find($id);
+        $data = array(
+            'id' => $id,
+            'post' => $post
+        );
+ 
+        return view('blog.view_post', $data);
     }
 
     /**
@@ -73,9 +84,11 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
         //
+        $post = Post::find($id);
+        return view('adminPanel.edit', ['post'=>$post]);
     }
 
     /**
@@ -85,9 +98,31 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         //
+        $post = Post::find($id);
+
+        if(isset($request->commentCount)){
+            $commentCount = $request->commentCount;
+            $post->comment_count = $commentCount;
+        }
+        if (isset($request->visitcount)){
+            $visitCount = $request->$visitCount;
+            $post->visitCount->$visitCount;
+        }
+        if (isset($request->title)){
+            $post->title = $request->title;
+        }
+        if (isset($request->body)){
+            $post->body = $request->body;
+        }
+        $post->save();
+        if (isset($request->editForm)){
+            return redirect()->route('posts.index');
+        } else {
+            return redirect()->route('posts.show',['id'=>$id]);
+        }
     }
 
     /**
@@ -96,8 +131,12 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
         //
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect()->route('posts.index');
     }
 }

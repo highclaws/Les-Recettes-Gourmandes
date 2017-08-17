@@ -38,15 +38,15 @@
         <td>{{ $post->id }}</td>
         <td>{{ $post->title }}</td>
         <td>{{ $post->body }}</td>
-        <td>edit button</td>
-        <td>delete button</td>
+        <td><a href="{{ route('posts.edit', ['id'=>$post->id]) }}" class="btn btn-info">Edit</a> </td>
+        <td>
+        <form action="{{ route('posts.destroy', ['id'=>$post->id]) }}" method="post">
+            {{ csrf_field() }}
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" name="Delete" value="Delete" class="btn btn-danger">
+        </form>
     </tr>
     @endforeach
-        <th>sample post id</th>
-        <td>post title sample</td>
-        <td>content</td>
-        <td>edit button</td>
-        <td>delete button</td>
     </tbody>
 </table>
 @endsection

@@ -13,6 +13,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/accueil', 'Postcontroller@publicHomePage');
+Route::get('/accueil2', 'BlogController@publicHomePage');
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
